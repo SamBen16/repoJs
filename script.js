@@ -21,6 +21,57 @@ fetch('http://localhost:5678/api/works')
             figure.appendChild(img);
             figure.appendChild(figcaption);
             gallery.appendChild(figure);
+
+            // Utilisation de la fonction pour récupérer la catégorie
+            let category = getCategory(data[i]);
+            figure.setAttribute('id', category);
         }
+
+        // Partie boutons et filtres
+        const categories = new Set();
+        data.forEach(element => {
+            let category = getCategory(element);
+            console.log(category);
+            categories.add(category);
+        });
+        console.log(categories);
+
+        const buttons = document.querySelector('.buttons');
+
+        // intégration du bouton "tous"
+        const buttonTous = document.createElement('button');
+        buttonTous.setAttribute("type", "button");
+        buttonTous.setAttribute("id", "tous");
+        buttonTous.innerText = "tous";
+        buttons.appendChild(buttonTous);
+        buttonTous.addEventListener('click', function() {
+            const gallery = document.querySelector('.gallery');
+            const figures = gallery.querySelectorAll('figure');
+            figures.forEach(figure => {
+                figure.style.display = "block";
+            });
+        });
+
+        // intégration des autres boutons pour chaque catégorie
+        categories.forEach(category => {
+            const button = document.createElement('button');
+            button.setAttribute('type', 'button');
+            button.setAttribute('id', category);
+            button.innerText = category;
+            buttons.appendChild(button);
+            button.addEventListener('click', function() {
+                const gallery = document.querySelector('.gallery');
+                const figures = gallery.querySelectorAll('figure');
+                figures.forEach(figure => {
+                    figure.style.display = (figure.getAttribute('id') === category || category === "tous") ? "block" : "none";
+                });
+
+            });
+        });
     })
-    .catch(error => console.error(error));
+    .catch(console.error);
+
+// Fonction pour récupérer la catégorie d'un élément
+function getCategory(element) {
+    return element.category.name;
+}
