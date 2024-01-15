@@ -1,3 +1,5 @@
+let figure;
+let figureModal;
 fetch('http://localhost:5678/api/works')
     .then(response => response.json())
     .then(data => {
@@ -8,7 +10,7 @@ fetch('http://localhost:5678/api/works')
             const gallery = document.querySelector('.gallery');
 
             // Création des éléments 
-            const figure = document.createElement('figure');
+            figure = document.createElement('figure');
             const img = document.createElement('img');
             const figcaption = document.createElement('figcaption');
             
@@ -81,17 +83,86 @@ fetch('http://localhost:5678/api/works')
         if (isConnected == 'true') {
             document.querySelector("#loginId").style.display = "none";
             document.querySelector("#logoutId").style.display = "block";
-           console.log(gallery);
+            document.querySelector("#logoOuvrirModal1").style.display = "block";
+            document.querySelector("#ouvrirModal1").style.display = "block";
+            console.log(gallery);
         
         } else {
             document.querySelector("#loginId").style.display = "block";
             document.querySelector("#logoutId").style.display = "none";
-        }
-    })
+        };
 
-.catch(error => console.error(error));
+        // affichage 1ère modal
+        const ouvrirModal1 = document.querySelector('#ouvrirModal1');
+        const modal1 = document.querySelector('#modal1');
+        const fermerModal1 = document.getElementById("fermerModal1");
 
-// Fonction pour récupérer la catégorie d'un élément
-function getCategory(element) {
-    return element.category.name;
-}
+        ouvrirModal1.addEventListener('click', function() {
+            const galleryModal = document.querySelector('.galleryModal');
+            console.log(galleryModal);
+
+            data.forEach(element => {
+                figureModal = document.createElement('figure');
+                const imgModal = document.createElement('img');
+                const deleteImg = document.createElement('i');
+
+                imgModal.src = element.imageUrl;
+                imgModal.alt = element.title;
+
+                figureModal.classList.add('gallery-item');
+                figureModal.style.position = 'relative';
+                deleteImg.classList.add('fas', 'fa-trash-alt');
+                deleteImg.style.position = 'absolute';
+                deleteImg.style.top = '6px';
+                deleteImg.style.right = '6px';
+                deleteImg.style.zIndex = '1';
+                deleteImg.style.opacity = '1';
+                deleteImg.style.border = '2px solid black';
+                deleteImg.style.backgroundColor = "black";
+                deleteImg.style.color = "white";
+
+                figureModal.appendChild(imgModal);
+                figureModal.appendChild(deleteImg);
+                galleryModal.appendChild(figureModal);
+
+                console.log('figure:', figure);
+                console.log(figureModal);
+                
+                deleteImg.addEventListener('click', function() {
+                    const id = element.id;
+                    const token = localStorage.getItem("token");
+                     console.log(token);
+                    // Vérifier la présence du token
+                    if (token) {
+                        console.log(id);
+                        fetch(`http://localhost:5678/api/works/${id}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Accept': '*/*',
+                                'Authorization': `Bearer ${token}`,
+                            },
+                        })
+                        .then(response => {
+                            figure.style.display = 'none';
+                            figureModal.style.display = 'none';
+                        })
+                    }
+                });
+                modal1.style.display = "block";
+            });
+        });
+
+              // fermeture modal1 avec la croix
+        fermerModal1.addEventListener("click", function() {
+                console.log("fermer");
+                modal1.style.display = "none";
+            })
+        })
+        .catch(error => console.error(error));
+    
+    // Fonction pour récupérer la catégorie d'un élément
+    function getCategory(element) {
+        return element.category.name;
+    }
+    
+    
