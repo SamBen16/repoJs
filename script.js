@@ -65,11 +65,31 @@ fetch('http://localhost:5678/api/works')
                 figures.forEach(figure => {
                     figure.style.display = (figure.getAttribute('id') === category || category === "tous") ? "block" : "none";
                 });
-
             });
         });
+
+        // Passage fonctionnement connexion/deconnexion
+        const logoutLien = document.querySelector("#logoutId");
+            logoutLien.addEventListener("click", function () {
+            localStorage.clear();
+        });
+
+        // Récupère info de connexion depuis le localStorage
+        const isConnected = localStorage.getItem('connection');
+            console.log(isConnected);
+            const gallery = document.querySelector('.gallery');
+        if (isConnected == 'true') {
+            document.querySelector("#loginId").style.display = "none";
+            document.querySelector("#logoutId").style.display = "block";
+           console.log(gallery);
+        
+        } else {
+            document.querySelector("#loginId").style.display = "block";
+            document.querySelector("#logoutId").style.display = "none";
+        }
     })
-    .catch(console.error);
+
+.catch(error => console.error(error));
 
 // Fonction pour récupérer la catégorie d'un élément
 function getCategory(element) {

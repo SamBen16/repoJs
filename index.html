@@ -11,17 +11,24 @@
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
-<header>
-	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-	<nav>
-		<ul>
-			<li>projets</li>
-			<li>contact</li>
-			<li>login</li>
-			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
-		</ul>
-	</nav>
-</header>
+	<header>
+		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+		<nav>
+			<ul>
+				<li>projets</li>
+				<li>contact</li>
+				<li>
+					<div id="loginId">
+						<a href="./login.html">login</a>
+					</div>
+				</li>
+				<li style="display: none;" id="logoutId">
+					<a href="index.html">logout</a>
+				</li>
+				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+			</ul>
+		</nav>
+	</header>
 <main>
 	<section id="introduction">
 		<figure>
@@ -64,5 +71,6 @@
 	</nav>
 </footer>
 <script defer src="./script.js"></script>
+<script defer src="./login.js"></script>
 </body>
 </html>
