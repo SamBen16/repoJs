@@ -14,24 +14,24 @@
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
-	<header>
-		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-		<nav>
-			<ul>
-				<li>projets</li>
-				<li>contact</li>
-				<li>
-					<div id="loginId">
-						<a href="./login.html">login</a>
-					</div>
-				</li>
-				<li style="display: none;" id="logoutId">
-					<a href="index.html">logout</a>
-				</li>
-				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
-			</ul>
-		</nav>
-	</header>
+<header>
+	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+	<nav>
+		<ul>
+			<li>projets</li>
+			<li>contact</li>
+			<li>
+				<div id="loginId">
+					<a href="./login.html">login</a>
+				</div>
+			</li>
+			<li style="display: none;" id="logoutId">
+				<a href="index.html">logout</a>
+			</li>
+			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+		</ul>
+	</nav>
+</header>
 <main>
 	<section id="introduction">
 		<figure>
@@ -44,6 +44,7 @@
 			<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
 		</article>
 	</section>
+
 	<section id="portfolio">
 		<h2 id="projets">Mes Projets  &nbsp;
 		<!-- création icone et onglet "modifier" -->
@@ -72,12 +73,42 @@
 				</div>
 			</aside>
 
+		<!-- Insertion modal2-->
+			<aside id="modal2" class="modal2" aria-hidden="true" role="dialog" style="display: none;">	
+				<div class="modal-wrapper2">
+					<div id="logoModal2">
+						<i class="fa-solid fa-left-long" id="flecheModal2"></i>
+						<i class="fa-solid fa-xmark" id="fermerModal2"></i>
+					</div>
+					<h3>Ajout photo</h3><br>
+
+					<form id="formulaireModal2" enctype="multipart/form-data">
+						<label for="image" style="text-align: center;">+ Ajouter un fichier</label>
+						<input type="file" id="image" name="image" accept="image/*" required><br>
+
+						<label for="titreModal2">Titre:</label>
+						<input type="text" id="titreModal2" name="title" required><br>
+					
+						<label for="categoryModal2">Catégorie:</label>
+						<select id="categoryModal2" name="category" required>
+							<option value= 1>Hotels & restaurants</option>
+							<option value= 2>Appartements</option>
+							<option value= 3 >Objets</option>
+						</select><br>	
+					
+						<input type="submit" value="Ajouter le projet">
+					</form>
+				
+				</div>
+			</aside>
+
+		
 		<div class="buttons">
 		</div>
 		<div class="gallery">
 		</div>
 	</section>
-	
+
 	<section id="contact">
 		<h2>Contact</h2>
 		<p>Vous avez un projet ? Discutons-en !</p>

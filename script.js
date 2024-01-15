@@ -1,3 +1,4 @@
+
 let figure;
 let figureModal;
 fetch('http://localhost:5678/api/works')
@@ -70,6 +71,7 @@ fetch('http://localhost:5678/api/works')
             });
         });
 
+        
         // Passage fonctionnement connexion/deconnexion
         const logoutLien = document.querySelector("#logoutId");
             logoutLien.addEventListener("click", function () {
@@ -83,9 +85,9 @@ fetch('http://localhost:5678/api/works')
         if (isConnected == 'true') {
             document.querySelector("#loginId").style.display = "none";
             document.querySelector("#logoutId").style.display = "block";
-            document.querySelector("#logoOuvrirModal1").style.display = "block";
-            document.querySelector("#ouvrirModal1").style.display = "block";
-            console.log(gallery);
+           document.querySelector("#logoOuvrirModal1").style.display = "block";
+           document.querySelector("#ouvrirModal1").style.display = "block";
+           console.log(gallery);
         
         } else {
             document.querySelector("#loginId").style.display = "block";
@@ -102,7 +104,7 @@ fetch('http://localhost:5678/api/works')
             console.log(galleryModal);
 
             data.forEach(element => {
-                figureModal = document.createElement('figure');
+                const figureModal = document.createElement('figure');
                 const imgModal = document.createElement('img');
                 const deleteImg = document.createElement('i');
 
@@ -150,19 +152,70 @@ fetch('http://localhost:5678/api/works')
                 });
                 modal1.style.display = "block";
             });
+            
         });
 
               // fermeture modal1 avec la croix
         fermerModal1.addEventListener("click", function() {
                 console.log("fermer");
                 modal1.style.display = "none";
-            })
+        });
+
+            // fonctionnement modal2
+        ouvrirModal2.addEventListener('click', function() {
+            modal2.style.display = "block";
         })
-        .catch(error => console.error(error));
-    
-    // Fonction pour récupérer la catégorie d'un élément
-    function getCategory(element) {
-        return element.category.name;
-    }
-    
-    
+
+        flecheModal2.addEventListener('click', function() {
+            const flecheModal2 = document.getElementById('flecheModal2');
+            modal2.style.display = "none"; 
+            modal1.style.display = "block";
+        })
+        fermerModal2.addEventListener('click', function() {
+            const fermerModal2 = document.getElementById('fermerModal2');
+            const redirection = "index.html";
+            console.log('fermer modal2');
+            window.location.href= redirection;
+        })
+
+
+        const formulaireModal2 = document.getElementById('formulaireModal2');
+        formulaireModal2.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const titreModal2 = document.getElementById('titreModal2').value;
+            const categorieModal2 = document.getElementById('categoryModal2').value;
+            const imageInput = document.getElementById('image');
+            const image = imageInput.files[0];
+        
+            const formData = new FormData();
+            formData.append('title', titreModal2);
+            formData.append('category', categorieModal2);
+            formData.append('image', image);
+        
+            const token = localStorage.getItem("token");
+            fetch('http://localhost:5678/api/works', {
+                method: 'POST',
+                headers: {
+                    // 'Accept': 'application/json', 
+                    // 'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Projet ajouté avec succès:', data);
+            })
+            .catch(error => {
+                console.log('Réponse complète du serveur:', error.response);
+            });            
+
+        })
+    })
+    .catch(error => console.error(error));
+
+// Fonction pour récupérer la catégorie d'un élément
+function getCategory(element) {
+    return element.category.name;
+}
+
