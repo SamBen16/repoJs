@@ -68,7 +68,7 @@
 						</div>
 
 					<div id="ligne"></div>
-					<a href="#modal2" id="ouvrirModal2">Ajouter une photo Modal 2</a>
+					<a href="#modal2" id="ouvrirModal2">Ajouter une photo</a>
 					<!-- <button id="boutonAjoutPhoto">Ajouter une photo</button> -->
 				</div>
 			</aside>
@@ -82,15 +82,19 @@
 					</div>
 					<h3>Ajout photo</h3><br>
 
-					<form id="formulaireModal2" enctype="multipart/form-data">
-						<label for="image" style="text-align: center;">+ Ajouter un fichier</label>
+					<form id="formulaireModal2" enctype="multipart/form-data" method="post">
+						<div id="blocImage">
+							<i class="fa-regular fa-image" style="color: #b7babd; font-size: 35px; margin-bottom: 5px;"></i><br>
+						<label for="image" id="plusAjouter" style="text-align: center;">+ Ajouter un fichier</label>
 						<input type="file" id="image" name="image" accept="image/*" required><br>
 
+						<p>jpg, png: 4mo max</p>
+						</div>
 						<label for="titreModal2">Titre:</label>
 						<input type="text" id="titreModal2" name="title" required><br>
 					
 						<label for="categoryModal2">Catégorie:</label>
-						<select id="categoryModal2" name="category" required>
+						<select id="categoryModal2" name="category" style="width: 300px;" required>
 							<option value= 1>Hotels & restaurants</option>
 							<option value= 2>Appartements</option>
 							<option value= 3 >Objets</option>
