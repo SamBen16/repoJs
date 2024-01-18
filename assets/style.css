@@ -257,12 +257,6 @@ font-size: small;
 text-decoration: none;
 align-self:center;
 }
-  /* span, #boutonModifier {
-	color: black;
-	font-size: small;
-	text-decoration: none;
-	align-self:center;
-  } */
 h2 {
 display: flex;
 justify-content: center;	
@@ -295,9 +289,7 @@ max-width: 300px;
 overflow-y: auto;
 overflow-x: hidden;
 max-width: 30%;
-/* width: 100%; Ajustez la largeur de la modal selon vos besoins */
-/* max-width: 300px; Ajoutez une largeur maximale si nécessaire */
-max-height: 80%; /* Ajoutez une hauteur maximale si nécessaire */
+max-height: 80%; 
 padding: 20px;
 background-color: #FFF;
 text-align: center;
@@ -370,19 +362,16 @@ background-color: rgba(0, 0, 0, 0.7);
 	overflow-y: auto;
 	overflow-x: hidden;
 	max-width: 30%;
-	/* max-height: auto; */
 	padding: 20px;
 	background-color: #FFF;
 	text-align: center;
 	margin: auto;
 	margin-top: 20px;
-
 }
 #logoModal2 {
 		display: flex;
 		justify-content: space-between;
 		padding-top: 10px;
-
 }
 
 #imageModal2 {
@@ -440,10 +429,11 @@ background-color: rgba(0, 0, 0, 0.7);
 }
 #blocImage {
 	background-color: #E8F1F6;
-	;
+
 	padding: 10px;
 	margin-bottom: 20px;
 }
+
 #plusAjouter {
 display: inline-block;
 padding: 10px 20px;
@@ -455,4 +445,10 @@ user-select: none;
 background-color: #b7babd;
 color: rgb(71, 89, 170);
 border-radius: 10px;
+}
+#previewImage {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    max-height: 100%;
 }

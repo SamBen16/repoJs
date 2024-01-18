@@ -178,7 +178,6 @@ fetch('http://localhost:5678/api/works')
             window.location.href= redirection;
         })
 
-
         const formulaireModal2 = document.getElementById('formulaireModal2');
         formulaireModal2.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -204,8 +203,10 @@ fetch('http://localhost:5678/api/works')
             })
             .then(response => response.json())
             .then(data => {
+                alert("projet ajouté");
                 console.log('Projet ajouté avec succès:', data);
             })
+            
             .catch(error => {
                 console.log('Réponse complète du serveur:', error.response);
             });            
@@ -218,4 +219,33 @@ fetch('http://localhost:5678/api/works')
 function getCategory(element) {
     return element.category.name;
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const imageInput = document.getElementById("image");
+    const previewImage = document.getElementById("previewImage");
+    const previewImageContainer = document.getElementById("previewImageContainer");
+    const iconImage = document.querySelector('.fa-regular.fa-image');
+
+    imageInput.addEventListener("change", function () {
+        const file = imageInput.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                iconImage.style.display = "none";
+                previewImage.src = e.target.result;
+                previewImage.style.display = "block";
+                
+
+               
+            };
+
+            reader.readAsDataURL(file);
+        } else {
+            previewImage.src = "";
+            previewImage.style.display = "none";
+        }
+    });
+})
 

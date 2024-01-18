@@ -84,12 +84,17 @@
 
 					<form id="formulaireModal2" enctype="multipart/form-data" method="post">
 						<div id="blocImage">
-							<i class="fa-regular fa-image" style="color: #b7babd; font-size: 35px; margin-bottom: 5px;"></i><br>
-						<label for="image" id="plusAjouter" style="text-align: center;">+ Ajouter un fichier</label>
-						<input type="file" id="image" name="image" accept="image/*" required><br>
-
-						<p>jpg, png: 4mo max</p>
+							<label for="image" class="ajouterFichierLabel" style="text-align: center;">
+								<div id="previewImageContainer">
+									<img id="previewImage" src="" alt="Aperçu de l'image" style="max-width: 100%; max-height: 200px; margin-bottom: 5px; display: none;">
+									<i class="fa-regular fa-image" style="color: #b7babd; font-size: 35px; margin-bottom: 5px;"></i><br>
+								</div>
+								<span id="plusAjouter">+ Ajouter un fichier</span>
+							</label>
+							<input type="file" id="image" name="image" accept="image/*" required><br>
+							<p>jpg, png: 4mo max</p>
 						</div>
+						
 						<label for="titreModal2">Titre:</label>
 						<input type="text" id="titreModal2" name="title" required><br>
 					
