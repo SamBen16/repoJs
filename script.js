@@ -30,11 +30,8 @@ fetch('http://localhost:5678/api/works')
         data.forEach(element => {
             let category = getCategory(element);
             categories.add(category);
-            console.log(category);
         });
-       
-        console.log(categories);
-
+    
         // création des boutons qui filtrent par catégorie
         const buttons = document.querySelector('.buttons');
 
@@ -118,7 +115,6 @@ fetch('http://localhost:5678/api/works')
             figureModal.appendChild(deleteImg);
      
             figureModalArray.push(figureModal);
-            console.log(figureModalArray);
 
         deleteImg.addEventListener('click', function() {
             event.preventDefault();
@@ -193,10 +189,8 @@ fetch('http://localhost:5678/api/works')
             modal1.style.display = "block";
         })
         fermerModal2.addEventListener('click', function() {
-            // const redirection = "index.html";
-            modal2.style.display = "none";
-            modal1.style.display = "none";
-            // window.location.href= redirection;
+            const redirection = "index.html";
+            window.location.href= redirection;
         })
 
         formulaireModal2.addEventListener('submit', function(event) {
@@ -247,16 +241,12 @@ fetch('http://localhost:5678/api/works')
                 img.src = element.imageUrl;
                 img.alt = element.title;
                 
-                // category.setAttribute('id', id);
-                // category.setAttribute('categoryId', category.name);
-                
                 // Utiliser le texte de l'option sélectionnée comme attribut de données
                 figure.setAttribute('data-category', selectedOptionText);
         
                 figure.appendChild(img);
                 figure.appendChild(title);
                 gallery.appendChild(figure);
-                console.log(gallery);
         
                 //ajout dans la modal1
                 const galleryModal = document.querySelector('.galleryModal');
@@ -285,18 +275,13 @@ fetch('http://localhost:5678/api/works')
                 deleteImg.style.border = '2px solid black';
                 deleteImg.style.backgroundColor = "black";
                 deleteImg.style.color = "white";
-                console.log(galleryModal);
-        
             })
             .catch(error => {
                 console.log('Réponse complète du serveur:', error.response);
             });            
         })
-        
-    
 
-
-
+    // Chargement de l'image
 document.addEventListener("DOMContentLoaded", function () {
     const imageInput = document.getElementById("image");
     const previewImage = document.getElementById("previewImage");
