@@ -8,8 +8,6 @@ function seConnecter() {
             email: event.target.querySelector("[name=email]").value,
             password: event.target.querySelector("[name=password]").value,
         };
-        console.log(user);
-
     
         const chargeUtile = JSON.stringify(user);
         fetch('http://localhost:5678/api/users/login', {
@@ -21,7 +19,6 @@ function seConnecter() {
         .then(data => {
         console.log(data)
        
-//        if (email == true && password == true) {
     if (typeof data.message === "undefined") {
 
             // enregistrement dans localStorage
@@ -38,7 +35,6 @@ function seConnecter() {
             console.log(data.message)
            alert("L'e-mail et/ou le mot de passe sont incorrects.");
        }
-        
     })
   });    
 }}
