@@ -1,5 +1,6 @@
 let figure;
 let figureModal;
+let figureModalArray = [];
 let figureArray = [];
 let index;
 fetch('http://localhost:5678/api/works')
@@ -86,7 +87,7 @@ fetch('http://localhost:5678/api/works')
         const ouvrirModal1 = document.querySelector('#ouvrirModal1');
         const modal1 = document.querySelector('#modal1');
         const fermerModal1 = document.getElementById("fermerModal1");
-        const figureModalArray = [];
+        figureModalArray = [];
         const galleryModal = document.querySelector('.galleryModal');
         let deleteImg;
         
@@ -132,6 +133,7 @@ fetch('http://localhost:5678/api/works')
                 if (figureModal && galleryModal.contains(figureModal)) {
                     // Récupérer l'index de la figureModal dans figureModalArray
                     const modalIndex = figureModalArray.indexOf(figureModal);
+                    // -1 est retourné quand l'élément n'est pas retrouvé
                     if (modalIndex !== -1) {
                         // Supprimer la figureModal de figureModalArray
                         figureModalArray.splice(modalIndex, 1);
@@ -154,7 +156,7 @@ fetch('http://localhost:5678/api/works')
                         }
                     }
                 } else {
-                    console.log("le noeud enfant n existe pas");
+                    alert("le noeud enfant n existe pas");
                 }
             })
         }
@@ -189,24 +191,22 @@ fetch('http://localhost:5678/api/works')
             modal1.style.display = "block";
         })
         fermerModal2.addEventListener('click', function() {
-            const redirection = "index.html";
-            window.location.href= redirection;
+            modal2.style.display = "none"; 
+            modal1.style.display = "block";
         })
 
         formulaireModal2.addEventListener('submit', function(event) {
             event.preventDefault();
             const formulaireModal2 = document.getElementById('formulaireModal2');
+
             const titreModal2 = document.getElementById('titreModal2').value;
             
             // Récupérer l'élément <select>
             const selectElement = document.getElementById('categoryModal2');
-            
             // Récupérer l'option sélectionnée
             const selectedOption = selectElement.options[selectElement.selectedIndex];
-            
             // Récupérer la valeur (entier) de l'option sélectionnée
             const categorieModal2 = selectedOption.value;
-            
             // Récupérer le texte de l'option sélectionnée
             const selectedOptionText = selectedOption.innerText;
         
@@ -247,6 +247,7 @@ fetch('http://localhost:5678/api/works')
                 figure.appendChild(img);
                 figure.appendChild(title);
                 gallery.appendChild(figure);
+                figureArray.push(figure);
         
                 //ajout dans la modal1
                 const galleryModal = document.querySelector('.galleryModal');
@@ -264,6 +265,8 @@ fetch('http://localhost:5678/api/works')
                 figureModal.appendChild(imgModal);
                 galleryModal.appendChild(figureModal);
                 figureModal.appendChild(deleteImg);
+                figureModalArray.push(figureModal);
+
                 figureModal.classList.add('gallery-item');
                 figureModal.style.position = 'relative';
                 deleteImg.classList.add('fas', 'fa-trash-alt');
@@ -275,13 +278,61 @@ fetch('http://localhost:5678/api/works')
                 deleteImg.style.border = '2px solid black';
                 deleteImg.style.backgroundColor = "black";
                 deleteImg.style.color = "white";
+
+                deleteImg.addEventListener('click', function() {
+                    event.preventDefault();
+                    const id = element.id;
+                    const token = localStorage.getItem("token");
+                    if (token) {
+                        fetch(`http://localhost:5678/api/works/${id}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Accept': '*/*',
+                                'Authorization': `Bearer ${token}`,
+                            },
+                    })
+                    .then(response => {
+                        if (figureModal && galleryModal.contains(figureModal)) {
+                            // Récupérer l'index de la figureModal dans figureModalArray
+                            const modalIndex = figureModalArray.indexOf(figureModal);
+
+                            // -1 est retourné quand l'élément n'est pas retrouvé
+                            if (modalIndex !== -1) {
+                                // Supprimer la figureModal de figureModalArray
+                                figureModalArray.splice(modalIndex, 1);
+                            }
+            
+                            // Supprimer la figureModal de la galerie modale
+                            galleryModal.removeChild(figureModal);
+
+                            // Supprimer la figure correspondante de la galerie principale
+                            if ((modalIndex !== -1) && figure && gallery.contains(figure)) {
+                                const figureToRemove = figureArray[modalIndex];
+
+                                if (figureToRemove) {
+                                    // Supprimer la figure de figureArray
+                                    figureArray.splice(modalIndex, 1);
+            
+                                    // Supprimer la figure de la galerie principale
+                                    if (gallery.contains(figureToRemove)) {
+                                        gallery.removeChild(figureToRemove);
+                                    }
+                                }
+                            }
+                        } else {
+                            alert("le noeud enfant n existe pas");
+                        }
+                    })
+                }
+            });
             })
             .catch(error => {
-                console.log('Réponse complète du serveur:', error.response);
+                alert('Réponse complète du serveur:', error.response);
             });            
         })
 
     // Chargement de l'image
+// au chargement du contenu
 document.addEventListener("DOMContentLoaded", function () {
     const imageInput = document.getElementById("image");
     const previewImage = document.getElementById("previewImage");
@@ -293,6 +344,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const file = imageInput.files[0];
 
             if (file) {
+                // quand le fichier est selectionné, objet fileReader est crée => permet de lire son contenu
                 const reader = new FileReader();
 
                 reader.onload = function (e) {
@@ -301,9 +353,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     previewImage.style.display = "block";
                 };
 
+                // méthode de reader qui permet la lecture d'un contenu de fichier sous forme d'URL
                 reader.readAsDataURL(file);
             } else {
-                // previewImage.src = "";
                 previewImage.style.display = "none";
             }
         });
