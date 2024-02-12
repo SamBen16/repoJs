@@ -2,41 +2,40 @@ function seConnecter() {
     const seConnecterForm = document.querySelector(".formulaire");
     if (seConnecterForm) {
         seConnecterForm.addEventListener('submit', function(event) {
-        event.preventDefault();
+            event.preventDefault();
         
-        const user =  {
-            email: event.target.querySelector("[name=email]").value,
-            password: event.target.querySelector("[name=password]").value,
-        };
+            const user =  {
+                email: event.target.querySelector("[name=email]").value,
+                password: event.target.querySelector("[name=password]").value,
+            };
     
-        const chargeUtile = JSON.stringify(user);
-        fetch('http://localhost:5678/api/users/login', {
-            method: "POST",
-            headers: { "Content-type": "application/json" },
-            body: chargeUtile,
-        })
-        .then(response => response.json())
-        .then(data => {
-        console.log(data)
-       
-    if (typeof data.message === "undefined") {
-
-            // enregistrement dans localStorage
-            localStorage.setItem('connection', 'true');
-            localStorage.setItem("userId", data.userId);
-            localStorage.setItem("token", data.token);
-            console.log(data.token);
-            //mise en place parametre ds l'URL avec la méthode GET 
-            const redirection = "index.html";
-            // redirection
-             window.location.href= redirection;
-       } else {
-            //Gérer le cas où l'authentification a échoué
-            console.log(data.message)
-           alert("L'e-mail et/ou le mot de passe sont incorrects.");
-       }
-    })
-  });    
-}}
+            const chargeUtile = JSON.stringify(user);
+            fetch('http://localhost:5678/api/users/login', {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: chargeUtile,
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                
+                if (typeof data.userId !== "undefined" && typeof data.token !== "undefined") {
+                    // Enregistrement dans localStorage
+                    localStorage.setItem('connection', 'true');
+                    localStorage.setItem("userId", data.userId);
+                    localStorage.setItem("token", data.token);
+                    const redirection = "index.html";
+                    window.location.href = redirection;
+                } else {
+                    alert("L'e-mail et/ou le mot de passe sont incorrects.");
+                }
+            })
+            .catch(error => {
+                console.error('Erreur lors de la requête de connexion :', error);
+            });
+        });    
+    }
+}
 
 seConnecter();
+

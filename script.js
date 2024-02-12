@@ -21,12 +21,17 @@ fetch('http://localhost:5678/api/works')
             figure.appendChild(figcaption);
             gallery.appendChild(figure);
 
+            function getCategory(element) {
+                return element.category.name;
+            }
+
             let category = getCategory(data[i]);
             figure.setAttribute('data-category', category);
 
             figureArray.push(figure);
         }
 
+        // création de l'objet
         let categories = new Set();
         data.forEach(element => {
             let category = getCategory(element);
@@ -38,8 +43,8 @@ fetch('http://localhost:5678/api/works')
 
         const buttonTous = document.createElement('button');
         buttonTous.setAttribute("type", "button");
-        buttonTous.setAttribute("data-category", "tous");
-        buttonTous.innerText = "tous";
+        buttonTous.setAttribute("data-category", "Tous");
+        buttonTous.innerText = "Tous";
         buttons.appendChild(buttonTous);
         buttonTous.addEventListener('click', function() {
             const gallery = document.querySelector('.gallery');
@@ -77,6 +82,8 @@ fetch('http://localhost:5678/api/works')
             document.querySelector("#logoutId").style.display = "block";
            document.querySelector("#logoOuvrirModal1").style.display = "block";
            document.querySelector("#ouvrirModal1").style.display = "block";
+           document.querySelector('.buttons').style.display = "none";
+           document.getElementById("banniere").style.display = "block";
         
         } else {
             document.querySelector("#loginId").style.display = "block";
@@ -103,12 +110,14 @@ fetch('http://localhost:5678/api/works')
             figureModal.style.position = 'relative';
             deleteImg.classList.add('fas', 'fa-trash-alt');
             deleteImg.style.position = 'absolute';
-            deleteImg.style.top = '6px';
-            deleteImg.style.right = '6px';
             deleteImg.style.zIndex = '1';
             deleteImg.style.opacity = '1';
+            deleteImg.style.fontSize = '4px';
             deleteImg.style.border = '2px solid black';
-            deleteImg.style.backgroundColor = "black";
+            deleteImg.style.top = '2px';
+            deleteImg.style.right = '2px';
+            deleteImg.style.borderRadius = '1px';
+            deleteImg.style.backgroundColor = 'black';
             deleteImg.style.color = "white";
 
             galleryModal.appendChild(figureModal);
@@ -159,16 +168,29 @@ fetch('http://localhost:5678/api/works')
                     alert("le noeud enfant n existe pas");
                 }
             })
+            
         }
     });
 });
-    
+
         fermerModal1.addEventListener("click", function() {
             event.preventDefault();
             modal1.style.display = "none";
         });
+
         ouvrirModal1.addEventListener('click', function() {
             modal1.style.display = "block";
+        });
+        const modalWrapper = document.querySelector('.modal-wrapper');
+        modal1.addEventListener('click', function(event) {
+            // Vérifier si la modal est ouverte
+            if (modal1.style.display === "block") {
+                // Vérifier si le clic n'est pas à l'intérieur de la modal
+                if (!modalWrapper.contains(event.target)) {
+                    // Fermer la modal en changeant sa propriété display à "none"
+                    modal1.style.display = "none";
+                }
+            }
         });
         function getCategory(element) {
             return element.category.name;
@@ -194,6 +216,22 @@ fetch('http://localhost:5678/api/works')
             modal2.style.display = "none"; 
             modal1.style.display = "block";
         })
+        const modalWrapper2 = document.querySelector('.modal-wrapper2');
+        modal2.addEventListener('click', function(event) {
+            // Vérifier si la modal est ouverte
+            if (modal2.style.display === "block") {
+                // Vérifier si le clic n'est pas à l'intérieur de la modal
+                if (!modalWrapper2.contains(event.target)) {
+                    // Fermer la modal en changeant sa propriété display à "none"
+                    modal2.style.display = "none";
+                    modal1.style.display = "none";
+                }
+            }
+        });
+
+        // modal2.addEventListener('click', function() {
+            
+        // })
 
         formulaireModal2.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -209,6 +247,9 @@ fetch('http://localhost:5678/api/works')
             const categorieModal2 = selectedOption.value;
             // Récupérer le texte de l'option sélectionnée
             const selectedOptionText = selectedOption.innerText;
+
+            // Réinitialisation de la sélection
+            selectElement.selectedIndex = 0;
         
             const imageInput = document.getElementById('image');
             const image = imageInput.files[0];
@@ -231,7 +272,7 @@ fetch('http://localhost:5678/api/works')
             .then(element => {
                 //ajout sur la page d'accueil
                 const gallery = document.querySelector('.gallery');
-        
+
                 const figure = document.createElement('figure');
                 const title = document.createElement('figcaption');
                 const category = document.createElement('category');
@@ -271,12 +312,14 @@ fetch('http://localhost:5678/api/works')
                 figureModal.style.position = 'relative';
                 deleteImg.classList.add('fas', 'fa-trash-alt');
                 deleteImg.style.position = 'absolute';
-                deleteImg.style.top = '6px';
-                deleteImg.style.right = '6px';
                 deleteImg.style.zIndex = '1';
                 deleteImg.style.opacity = '1';
+                deleteImg.style.fontSize = '4px';
                 deleteImg.style.border = '2px solid black';
-                deleteImg.style.backgroundColor = "black";
+                deleteImg.style.top = '2px';
+                deleteImg.style.right = '2px';
+                deleteImg.style.borderRadius = '1px';
+                deleteImg.style.backgroundColor = 'black';
                 deleteImg.style.color = "white";
 
                 deleteImg.addEventListener('click', function() {
@@ -325,6 +368,9 @@ fetch('http://localhost:5678/api/works')
                     })
                 }
             });
+            formulaireModal2.reset();
+            const redirection = "index.html";
+            window.location.href = redirection;
             })
             .catch(error => {
                 alert('Réponse complète du serveur:', error.response);
