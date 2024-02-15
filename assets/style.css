@@ -331,6 +331,7 @@ h3 {
 }
 .gallery-item {
 	box-sizing: border-box;
+	width: 100%;
 }
 .gallery-item img {
 	 width: 100%;

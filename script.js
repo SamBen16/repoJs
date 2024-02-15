@@ -229,9 +229,10 @@ fetch('http://localhost:5678/api/works')
             }
         });
 
-        // modal2.addEventListener('click', function() {
-            
-        // })
+        modal2.addEventListener('click', function() {
+            modal2.style.display = "none";
+            modal1.style.display = "none";
+        })
 
         formulaireModal2.addEventListener('submit', function(event) {
             event.preventDefault();
